@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TruthShield AI | Fake News Detection System</title>
+    <meta name="description" content="TruthShield AI is a frontend-only fake news detection system with a dark 3D animated interface.">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="noise-layer" aria-hidden="true"></div>
+    <div class="page-shell">
+        <header class="topbar reveal">
+            <a class="brand" href="#">
+                <span class="brand-mark"></span>
+                <span>
+                    <strong>TruthShield AI</strong>
+                    <small>Frontend Fake News Detection System</small>
+                </span>
+            </a>
+
+            <nav class="topnav">
+                <a href="#detector">Detector</a>
+                <a href="#signals">Signals</a>
+                <a href="#samples">Samples</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="hero-copy reveal">
+                    <p class="eyebrow">Frontend AI style detector</p>
+                    <h1>Scan suspicious headlines inside a cinematic 3D newsroom.</h1>
+                    <p class="hero-text">
+                        TruthShield AI is now a pure frontend build. It scores credibility in the browser using
+                        source quality, evidence density, tone analysis, structure, and misinformation cues. No PHP
+                        setup is required.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="#detector">Analyze News</a>
+                        <a class="button button-secondary" href="#samples">Try Demo Stories</a>
+                    </div>
+
+                    <div class="hero-stats">
+                        <article class="stat-card">
+                            <span>Detection Mode</span>
+                            <strong>SignalMatrix AI</strong>
+                        </article>
+                        <article class="stat-card">
+                            <span>Runtime</span>
+                            <strong>Browser Only</strong>
+                        </article>
+                        <article class="stat-card">
+                            <span>Experience</span>
+                            <strong>3D Dark UI</strong>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="hero-scene reveal">
+                    <div class="scene" id="scene">
+                        <div class="ambient-glow glow-a"></div>
+                        <div class="ambient-glow glow-b"></div>
+                        <div class="ring ring-large"></div>
+                        <div class="ring ring-medium"></div>
+                        <div class="ring ring-small"></div>
+
+                        <div class="news-cube">
+                            <div class="cube-face face-front">Source Graph</div>
+                            <div class="cube-face face-back">Evidence Score</div>
+                            <div class="cube-face face-right">Risk Index</div>
+                            <div class="cube-face face-left">Claim Trace</div>
+                            <div class="cube-face face-top">Signal AI</div>
+                            <div class="cube-face face-bottom">Trust Map</div>
+                        </div>
+
+                        <div class="float-card card-top">
+                            <span>TRUST</span>
+                            <strong>84%</strong>
+                        </div>
+                        <div class="float-card card-right">
+                            <span>RISK</span>
+                            <strong>21%</strong>
+                        </div>
+                        <div class="float-card card-bottom">
+                            <span>SCAN</span>
+                            <strong>LIVE</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="feature-strip reveal" id="signals">
+                <article class="feature-card">
+                    <h2>Explainable Signals</h2>
+                    <p>Every scan breaks the score into traceable reasons instead of returning a mysterious black-box answer.</p>
+                </article>
+                <article class="feature-card">
+                    <h2>Live Confidence Meter</h2>
+                    <p>Trust score, fake-risk score, and confidence percentage update together in a single response panel.</p>
+                </article>
+                <article class="feature-card">
+                    <h2>3D Dark Interface</h2>
+                    <p>The dashboard uses layered gradients, glass panels, animated depth, and a rotating data core.</p>
+                </article>
+            </section>
+
+            <section class="detector-section reveal" id="detector">
+                <div class="section-heading">
+                    <p class="eyebrow">Detector Console</p>
+                    <h2>Run a fake news credibility scan</h2>
+                    <p>
+                        Paste a headline, article body, and optional source URL. The browser analyzes writing patterns,
+                        source reputation, and evidence cues, then returns a verdict with explainable reasoning.
+                    </p>
+                </div>
+
+                <div class="detector-grid">
+                    <form class="panel form-panel" id="analyzeForm">
+                        <label for="title">Headline</label>
+                        <input
+                            id="title"
+                            name="title"
+                            type="text"
+                            placeholder="Example: Officials release verified flood response update"
+                        >
+
+                        <label for="content">Article Content</label>
+                        <textarea
+                            id="content"
+                            name="content"
+                            rows="8"
+                            placeholder="Paste the full post, article summary, or suspicious message here..."
+                        ></textarea>
+
+                        <label for="source_url">Source URL (optional but recommended)</label>
+                        <input
+                            id="source_url"
+                            name="source_url"
+                            type="url"
+                            placeholder="https://example.com/news/article"
+                        >
+
+                        <div class="button-row">
+                            <button class="button button-primary" type="submit">Scan With AI</button>
+                            <button class="button button-secondary" type="reset" id="resetButton">Reset</button>
+                        </div>
+
+                        <div class="microcopy">
+                            This is a frontend-only demo. It runs locally in the browser and does not replace professional fact-checking.
+                        </div>
+                    </form>
+
+                    <aside class="panel result-panel" id="resultPanel" aria-live="polite">
+                        <div class="result-empty">
+                            <div class="pulse-orb"></div>
+                            <p class="result-overline">Awaiting input</p>
+                            <h3>Drop a story into the detector</h3>
+                            <p>
+                                Your result will appear here with a live trust score, fake-risk score, confidence,
+                                signal breakdown, and a fact-check checklist.
+                            </p>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+
+            <section class="samples-section reveal" id="samples">
+                <div class="section-heading">
+                    <p class="eyebrow">Quick Start</p>
+                    <h2>Try three demo stories</h2>
+                    <p>Use these samples to test how the engine reacts to trusted reporting, fake-style claims, and mixed signals.</p>
+                </div>
+
+                <div class="sample-grid" id="sampleGrid"></div>
+            </section>
+        </main>
+
+        <footer class="footer reveal">
+            <p>Built in pure HTML, CSS, and JavaScript with custom 3D transforms.</p>
+            <p>Project name: <strong>TruthShield AI</strong></p>
+        </footer>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
