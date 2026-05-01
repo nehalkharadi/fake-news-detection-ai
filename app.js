@@ -124,16 +124,22 @@ const playTypingSound = () => {
         if (audioCtx.state === 'suspended') {
             audioCtx.resume();
         }
+        
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(600 + Math.random() * 400, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+        
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(800 + Math.random() * 200, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.02);
+        
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.02);
+        
         osc.connect(gain);
         gain.connect(audioCtx.destination);
+        
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.03);
+        osc.stop(audioCtx.currentTime + 0.02);
     } catch (e) {
         // Fallback for audio disabled
     }
