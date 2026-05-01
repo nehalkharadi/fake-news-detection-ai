@@ -1,21 +1,21 @@
 :root {
-    --bg: #030712;
-    --bg-deep: #050a18;
-    --panel: rgba(10, 16, 32, 0.78);
-    --panel-border: rgba(125, 162, 255, 0.18);
-    --panel-strong: rgba(12, 20, 40, 0.92);
-    --text: #edf4ff;
-    --muted: #93a8d1;
-    --accent: #22d3ee;
-    --accent-strong: #7c3aed;
-    --accent-warm: #ff7a59;
-    --success: #57f287;
-    --warning: #ffd166;
-    --danger: #ff6b6b;
-    --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
-    --radius-lg: 28px;
-    --radius-md: 22px;
-    --radius-sm: 16px;
+    --bg: #050505;
+    --bg-deep: #000000;
+    --panel: #000000;
+    --panel-border: #00ff00;
+    --panel-strong: #000000;
+    --text: #00ff00;
+    --muted: #00aa00;
+    --accent: #00ff00;
+    --accent-strong: #00ff00;
+    --accent-warm: #00ff00;
+    --success: #00ff00;
+    --warning: #ccff00;
+    --danger: #ff0000;
+    --shadow: none;
+    --radius-lg: 0px;
+    --radius-md: 0px;
+    --radius-sm: 0px;
 }
 
 * {
@@ -29,40 +29,15 @@ html {
 body {
     margin: 0;
     min-height: 100vh;
-    font-family: "Aptos", "Trebuchet MS", "Segoe UI Variable", sans-serif;
+    font-family: "Courier New", Courier, monospace;
     color: var(--text);
-    background:
-        radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.16), transparent 28%),
-        radial-gradient(circle at 80% 15%, rgba(124, 58, 237, 0.18), transparent 24%),
-        radial-gradient(circle at 50% 80%, rgba(255, 122, 89, 0.12), transparent 25%),
-        linear-gradient(135deg, #02040b 0%, #07111f 45%, #040714 100%);
+    background: var(--bg);
     overflow-x: hidden;
 }
 
 body::before,
 body::after {
-    content: "";
-    position: fixed;
-    inset: auto;
-    width: 26rem;
-    height: 26rem;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.22;
-    pointer-events: none;
-    z-index: 0;
-}
-
-body::before {
-    top: -8rem;
-    left: -8rem;
-    background: rgba(34, 211, 238, 0.85);
-}
-
-body::after {
-    bottom: -10rem;
-    right: -6rem;
-    background: rgba(124, 58, 237, 0.7);
+    display: none;
 }
 
 .noise-layer {
@@ -122,8 +97,9 @@ textarea {
 .hero h1,
 .result-header h3,
 .sample-card h3 {
-    font-family: "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    font-family: "Courier New", Courier, monospace;
     letter-spacing: 0.01em;
+    text-transform: uppercase;
 }
 
 .brand span {
@@ -138,25 +114,15 @@ textarea {
 .brand-mark {
     width: 2.6rem;
     height: 2.6rem;
-    border-radius: 0.9rem;
-    background:
-        linear-gradient(135deg, rgba(34, 211, 238, 0.95), rgba(124, 58, 237, 0.85));
+    border-radius: 0;
+    background: var(--text);
     position: relative;
-    box-shadow: 0 0 28px rgba(34, 211, 238, 0.45);
+    box-shadow: none;
 }
 
 .brand-mark::before,
 .brand-mark::after {
-    content: "";
-    position: absolute;
-    inset: 22%;
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    border-radius: 0.5rem;
-}
-
-.brand-mark::after {
-    inset: 36%;
-    transform: rotate(45deg);
+    display: none;
 }
 
 .topnav {
@@ -258,15 +224,15 @@ textarea {
 }
 
 .button-primary {
-    color: #031019;
-    background: linear-gradient(135deg, var(--accent), #86f7ff);
-    box-shadow: 0 16px 36px rgba(34, 211, 238, 0.28);
+    color: #000;
+    background: var(--accent);
+    box-shadow: none;
 }
 
 .button-secondary {
     color: var(--text);
-    border-color: rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.03);
+    border-color: var(--text);
+    background: #000;
 }
 
 .hero-stats {

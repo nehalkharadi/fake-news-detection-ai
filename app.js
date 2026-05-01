@@ -114,9 +114,65 @@ const escapeHtml = (value) =>
         return entities[char] || char;
     });
 
-const renderInitialState = () => {
+let audioCtx = null;
+
+const playTypingSound = () => {
+    try {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(600 + Math.random() * 400, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.03);
+    } catch (e) {
+        // Fallback for audio disabled
+    }
+};
+
+const typeWriterHtml = async (element, html, speed = 8) => {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    element.innerHTML = '';
+
+    const processNode = async (node, parent) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+            const text = node.textContent;
+            const textNode = document.createTextNode('');
+            parent.appendChild(textNode);
+            for (let i = 0; i < text.length; i++) {
+                textNode.textContent += text[i];
+                if (text[i].trim() !== '') {
+                    playTypingSound();
+                    await new Promise(r => setTimeout(r, speed));
+                }
+            }
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+            const clone = node.cloneNode(false);
+            parent.appendChild(clone);
+            for (const child of Array.from(node.childNodes)) {
+                await processNode(child, clone);
+            }
+        }
+    };
+
+    for (const child of Array.from(tempDiv.childNodes)) {
+        await processNode(child, element);
+    }
+};
+
+const renderInitialState = async () => {
     resultPanel.classList.remove("is-loading");
-    resultPanel.innerHTML = `
+    await typeWriterHtml(resultPanel, `
         <div class="result-empty">
             <div class="pulse-orb"></div>
             <p class="result-overline">Awaiting input</p>
@@ -126,7 +182,7 @@ const renderInitialState = () => {
                 signal breakdown, and a fact-check checklist.
             </p>
         </div>
-    `;
+    `, 5);
 };
 
 const excerpt = (text, limit = 160) => {
@@ -532,9 +588,9 @@ const analyzePayload = (payload) => {
     };
 };
 
-const renderLoadingState = () => {
+const renderLoadingState = async () => {
     resultPanel.classList.add("is-loading");
-    resultPanel.innerHTML = `
+    await typeWriterHtml(resultPanel, `
         <div class="result-empty">
             <div class="pulse-orb"></div>
             <p class="result-overline">SignalMatrix AI</p>
@@ -543,12 +599,12 @@ const renderLoadingState = () => {
                 Inspecting credibility signals, sensational wording, evidence density, and source reputation.
             </p>
         </div>
-    `;
+    `, 5);
 };
 
-const renderErrorState = (message) => {
+const renderErrorState = async (message) => {
     resultPanel.classList.remove("is-loading");
-    resultPanel.innerHTML = `
+    await typeWriterHtml(resultPanel, `
         <div class="result-shell">
             <div class="result-header">
                 <div>
@@ -559,10 +615,10 @@ const renderErrorState = (message) => {
                 <span class="status-pill tone-danger">Check Input</span>
             </div>
         </div>
-    `;
+    `, 5);
 };
 
-const renderResult = (data) => {
+const renderResult = async (data) => {
     resultPanel.classList.remove("is-loading");
 
     const trust = data.scores.trust;
@@ -598,7 +654,7 @@ const renderResult = (data) => {
         .map((item) => `<li>${escapeHtml(item)}</li>`)
         .join("");
 
-    resultPanel.innerHTML = `
+    const finalHtml = `
         <div class="result-shell">
             <div class="result-header">
                 <div>
@@ -658,6 +714,8 @@ const renderResult = (data) => {
             </div>
         </div>
     `;
+
+    await typeWriterHtml(resultPanel, finalHtml, 4);
 };
 
 const loadStoryIntoForm = (story) => {
@@ -690,7 +748,11 @@ const renderSampleCards = () => {
 
 form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    renderLoadingState();
+
+    // Prevent re-submitting while loading
+    if (resultPanel.classList.contains("is-loading")) return;
+
+    await renderLoadingState();
 
     const payload = {
         title: titleInput.value.trim(),
@@ -699,16 +761,16 @@ form.addEventListener("submit", async (event) => {
     };
 
     if (!payload.title && !payload.content) {
-        renderErrorState("Please enter a headline or article content before scanning.");
+        await renderErrorState("Please enter a headline or article content before scanning.");
         return;
     }
 
     try {
         await new Promise((resolve) => window.setTimeout(resolve, 650));
         const data = analyzePayload(payload);
-        renderResult(data);
+        await renderResult(data);
     } catch (error) {
-        renderErrorState(error.message || "Unexpected error");
+        await renderErrorState(error.message || "Unexpected error");
     }
 });
 
